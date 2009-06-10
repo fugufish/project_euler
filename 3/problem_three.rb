@@ -9,15 +9,9 @@ class Fixnum
   
 end
 
-require 'benchmark'
-
-puts Benchmark.measure {
-  
-  Math.sqrt(600851475143).ceil.downto(2) do |i|
-    if 600851475143 % i == 0 && i.prime?
-      puts i
-      break
-    end
+Math.sqrt(600851475143).ceil.downto(2) do |i|
+  if 600851475143 % i == 0 && i.prime?
+    puts i
+    break
   end
-  
-}
+end
