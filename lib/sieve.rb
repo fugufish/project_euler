@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'ruby-debug'
 module Sieve
   
   def prime?
@@ -12,9 +14,10 @@ module Sieve
   end
   
   def primes
-    sieve = []
-    (2..self).to_a.each { |i| sieve[i] = i}
-    (2..Math.sqrt(self)).to_a.each  do |i|
+    sieve = [2]
+    3.step(self,2) { |i| sieve[i] = i }
+    sieve[self] = self unless self % 2 == 0
+    (2..Math.sqrt(self)).each  do |i|
       next unless sieve[i]
       (i*i).step(self, i) do |j|
         sieve[j] = nil
