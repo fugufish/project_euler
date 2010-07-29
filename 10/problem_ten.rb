@@ -1,26 +1,20 @@
-class Fixnum
+class Integer
   
   def prime?
-    return true unless ('1' * self) =~ /^1$|^(11+?)\1+$/
-    false
+    return true if self == 2
+    return false if (self & 1) == 0
+    square = Math.sqrt(self).round + 1
+    i = 1
+    while i <= square
+      i+= 2
+      return false if (self % i) == 0
+    end
+    true
   end
   
 end
 
+numbers = (2..2000000).to_a.recject! { |n| n % 2 == 0 }
 
-numbers = (2..2000000).to_a
-final = 0
-last_num_length = 0
-
-numbers.each do |n|
-  not_primes = []
-  if n.prime?
-    numbers.each { |x| not_primes << (n * x);}
-    numbers = numbers - not_primes
-    if numbers.length == last_num_length
-      puts numbers.inject { |result, element| result = element + result }
-      break
-    end
-    last_num_length = numbers.length
-  end
-end
+numbers = numbers.select { |n| n.prime? }
+puts numbers.inject { |result, element| result = element + result }
